@@ -6,6 +6,7 @@ use App\Models\Film;
 use App\Models\User;
 use App\Models\Genre;
 use Illuminate\Http\Request;
+use File;
 
 class FilmController extends Controller
 {
@@ -24,22 +25,22 @@ class FilmController extends Controller
             'user_id'       => '',
             'genre_id'   => 'required',
             'judul'         => 'required',
-            'gambar'        => 'required|image|mimes:jpg,png,jpeg',
-            'isi'           => 'required'
+            'cover'        => 'required|image|mimes:jpg,png,jpeg',
+            'deskripsi'           => 'required'
         ]);
 
 
-        $gambarName = time() . '.' . $request->gambar->extension();
+        $coverName = time() . '.' . $request->cover->extension();
 
-        $request->gambar->move(public_path('img/gambar'), $gambarName);
+        $request->cover->move(public_path('img/cover'), $coverName);
 
         $film = new Film;
 
         $film->user_id     = auth()->user()->id;
         $film->genre_id    = $request->genre_id;
         $film->judul       = $request->judul;
-        $film->gambar      = $gambarName;
-        $film->isi         = $request->isi;
+        $film->cover      = $coverName;
+        $film->deskripsi         = $request->deskripsi;
 
         $film->save();
 
@@ -64,26 +65,26 @@ class FilmController extends Controller
             'user_id'       => '',
             'genre_id'   => 'required',
             'judul'         => 'required',
-            'gambar'        => 'image|mimes:jpg,png,jpeg',
-            'isi'           => 'required'
+            'cover'        => 'image|mimes:jpg,png,jpeg',
+            'deskripsi'           => 'required'
         ]);
 
 
-        if ($request->has('gambar')) {
+        if ($request->has('cover')) {
             $film = Film::find($id);
 
-            $path = "img/gambar/";
-            File::delete($path . $film->gambar);
+            $path = "img/cover/";
+            File::delete($path . $film->cover);
 
-            $gambarName = time() . '.' . $request->gambar->extension();
+            $coverName = time() . '.' . $request->cover->extension();
 
-            $request->gambar->move(public_path('img/gambar'), $gambarName);
+            $request->cover->move(public_path('img/cover'), $coverName);
 
             $film->user_id     = auth()->user()->id;
             $film->genre_id = $request->genre_id;
             $film->judul       = $request->judul;
-            $film->gambar      = $gambarName;
-            $film->isi         = $request->isi;
+            $film->cover      = $coverName;
+            $film->deskripsi         = $request->deskripsi;
 
             $film->save();
 
@@ -94,7 +95,7 @@ class FilmController extends Controller
             $film->user_id     = auth()->user()->id;
             $film->genre_id = $request->genre_id;
             $film->judul       = $request->judul;
-            $film->isi         = $request->isi;
+            $film->deskripsi         = $request->deskripsi;
 
             $film->save();
 
@@ -107,8 +108,8 @@ class FilmController extends Controller
     {
         $film = Film::find($id);
 
-        $path = "img/gambar/";
-        File::delete($path . $film->gambar);
+        $path = "img/cover/";
+        File::delete($path . $film->cover);
         $film->delete();
 
         return redirect('/films')->with('success', 'success, data deleted');

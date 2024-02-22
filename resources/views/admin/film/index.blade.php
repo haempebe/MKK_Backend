@@ -17,15 +17,15 @@
                     <div class="card-body">
                         <div class="mb-3">
                             <label for="namaJudul" class="form-label">Judul Film</label>
-                            <input type="text" name="judul" class="form-control" id="namaJudul">
+                            <input type="text" name="judul" class="form-control" id="namaJudul" value="{{old('judul')}}">
                             @error('judul')
                                 <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                             @enderror
                         </div>
                         <div class="mb-3">
                             <label for="deskripsi" class="form-label">Deskripsi</label>
-                            <div id="deskripsi"></div>
-                            <textarea class="form-control" name="deskripsi" id="content-textarea" hidden style="display: none;"></textarea>
+                            <div id="deskripsi">{!!old('deskripsi')!!}</div>
+                            <textarea class="form-control" name="deskripsi" id="content-textarea" hidden style="display: none;">{!!old('deskripsi')!!}</textarea>
                             @error('deskripsi')
                                 <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                             @enderror
@@ -97,18 +97,20 @@
                         @endphp
                         @foreach ($film as $item)
                             <tr>
-                                <td>{{ $i }}</td>
-                                <td>{{ $item->judul }}</td>
-                                <td>{{ $item->genre->nama_genre }}</td>
-                                <td>{{ $item->deskripsi }}</td>
+                                <td class="align-middle">{{ $i }}.</td>
+                                <td class="align-middle">{{ $item->judul }}</td>
+                                <td class="align-middle">{{ $item->genre->nama_genre }}</td>
+                                <td class="align-middle">{!! Str::limit($item->deskripsi, 100) !!}</td>
+                                <td class="align-middle">
+                                    <img src="{{ asset('img/cover/' . $item->cover) }}"
+                                        class="rounded-3 shadow-sm height-auto w-25" style="max-height: 100px" alt="">
+                                </td>
 
-                                <td>
+                                <td class="align-middle">
                                     <div class="d-flex">
-                                        <a href="" class="btn btn-warning btn-sm"><i
-                                                class="bi bi-eye"></i>Preview</a>
-                                        <a href="" class="btn btn-success btn-sm ms-1"><i
+                                        <a href="{{route('films.edit',$item->id)}}" class="btn btn-success btn-sm ms-1"><i
                                                 class="bi bi-pencil-square"></i>Edit</a>
-                                        <form onsubmit="return confirm('sure to delete this data')" action=""
+                                        <form onsubmit="return confirm('sure to delete this data')" action="{{route('films.delete',$item->id)}}"
                                             method="post">
                                             @csrf
                                             @method('DELETE')
