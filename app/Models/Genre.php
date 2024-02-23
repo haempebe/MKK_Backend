@@ -12,7 +12,7 @@ class Genre extends Model
     protected $table = 'genres';
     protected $fillable = ['nama_genre'];
 
-    public function berita()
+    public function film()
     {
         return $this->hasMany(Film::class);
     }
