@@ -1,11 +1,11 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 # Membuat Projek Film
-### Cara Instalasi 
+### Cara Instalasi Buka terminal & jalankan perintah dibawah
 
 1. git clone
 ```bash
-git clone https://github.com/haempebe/pas-berita-hamidzan.git
+git clone https://github.com/haempebe/MKK_Backend.git
 ```
 2. copy .env.example menjadi .env
 ```bash
@@ -13,7 +13,7 @@ cp .env.example .env
 ```
 3. setelah git clone masuk kedalam file dengan perintah cd
 ```bash
-cd pas-berita-hamidzan
+cd MKK_Backend
 ```
 4. Composer install
 ```bash
